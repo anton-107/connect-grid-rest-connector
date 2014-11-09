@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="bower_components/connect-grid/styles/grid.css"/>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/connect-grid/build/build.js"></script>
+
+    <!-- build:js:bundle build.js -->
+    <script src="module.js"></script>
+    <!-- /build -->
+    <style>
+        .country-cell {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body ng-controller="gridDemoController">
+
+<connect-grid class="grid" ng-model="data" grid-options="gridOptions"></connect-grid>
+
+<div style="clear: both"></div>
+
+<div ng-repeat="row in data">
+    {{ row }}
+</div>
+
+<script>
+    var app = angular.module('gridDemo', ['connect-grid'])
+            .controller('gridDemoController', ['$scope', function ($scope) {
+
+                            $scope.data = [];
+
+                            $scope.gridOptions = {
+                                columnDefs: [
+                                    {field: 'name'},
+                                    {field: 'year'},
+                                    {field: 'revenue'}
+                                ]
+                            }
+                        }]);
+    angular.bootstrap(document, ['gridDemo']);
+</script>
+
+</body>
+</html>

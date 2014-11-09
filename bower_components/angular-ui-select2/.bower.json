@@ -1,0 +1,28 @@
+{
+  "author": "AngularUI",
+  "name": "angular-ui-select2",
+  "homepage": "http://angular-ui.github.com",
+  "keywords": [
+    "angular",
+    "angularui",
+    "select2"
+  ],
+  "main": "./src/select2.js",
+  "dependencies": {
+    "angular": ">=1.2.0",
+    "select2": "~3.4",
+    "jquery": ">=1.6.4"
+  },
+  "devDependencies": {
+    "angular-mocks": ">=1.0.2"
+  },
+  "_release": "v201408191450",
+  "_resolution": {
+    "type": "tag",
+    "tag": "v201408191450",
+    "commit": "e1a02526fd8a32f20c4daac4acaf051d03e72852"
+  },
+  "_source": "git@github.com:schubergphilis/ui-select2.git",
+  "_target": "v201408191450",
+  "_originalSource": "git@github.com:schubergphilis/ui-select2.git"
+}
