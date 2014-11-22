@@ -17,7 +17,7 @@
                 var updateScopeOnScroll = _.debounce(function () {
                     scope.setGridIsScrolling(false);
                     startScroll = _.once(onScrollStart);
-                }, 1000);
+                }, 250);
 
                 if (element.length > 0) {
                     element.on('scroll', function () {
@@ -28,6 +28,19 @@
                         updateScopeOnScroll();
                     });
                 }
+
+                scope.$on('grid.update-scroll-position', function (e, data) {
+                    if (data.top) {
+                        element[0].scrollTop = parseInt(data.top);
+                    }
+                    if (data.left) {
+                        element[0].scrollLeft = parseInt(data.left);
+                    }
+                });
+
+                window.getGridScrollTop = function () {
+                    return element[0].scrollTop;
+                };
             }
         };
     }]);

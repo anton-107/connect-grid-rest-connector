@@ -20,7 +20,8 @@
     "README.md"
   ],
   "dependencies": {
-    "connect-grid": "git@github.com:schubergphilis/connect-grid.git#0.6.0",
+    "angular-resource": "~1.3.1",
+    "connect-grid": "git@github.com:schubergphilis/connect-grid.git#0.7.7",
     "angular-ui-select2": "git@github.com:schubergphilis/ui-select2.git#v201408191450"
   }
 }

@@ -8,21 +8,18 @@
             link: function(scope, element, attrs/*, ngModel */) {
                 var customTpl = scope.getCompiledColumnCellTemplate(attrs.column);
 
-                scope.cellIsChangedSinceRender = false;
-
-                scope.$on('cell-value-changed-' + scope.$parent.$index + '-' + scope.$index, function () {
-                    scope.cellIsChangedSinceRender = true;
-                });
-
                 if (customTpl) {
-                    element.find('span').replaceWith(customTpl(scope));
+                    scope.isCustomTpl = true;
+                    element.append(customTpl(scope));
+                } else {
+                    scope.isCustomTpl = false;
                 }
 
                 element.on('click', function () {
                     scope.setActiveCell(attrs.row, attrs.column);
                 });
             },
-            template: '<div class="grid__cell__content {{ getCellClass($parent.$index, $index) }}"\n     ng-class="{ \'grid__cell--nonselectable\': !isColumnSelectable($index), \'grid__cell--noneditable\': !isColumnEditable($index) }"\n     ng-style="{ height: px(gridOptions.headerCellHeight) }">\n    <span class="ng-grid__cell__content-wrap">\n        <span ng-if="cellIsChangedSinceRender">{{ renderCellContent($parent.$parent.$index, $parent.$index) }}</span>\n        <span ng-if="!cellIsChangedSinceRender">{{ ::renderCellContent($parent.$parent.$index, $parent.$index) }}</span>\n    </span>\n</div>'
+            template: '<div\n     ng-if="gridIsReadOnly && !isCustomTpl"\n     class="grid__cell__content {{ ::getCellClass(row._rowIndex, $parent.$index) }}"\n     ng-class="{x \'grid__cell--nonselectable\': {{::!isColumnSelectable($index)}}, \'grid__cell--noneditable\': {{::!isColumnEditable($index)}} }"\n     ng-style="{ height: \'{{ ::gridOptions.headerCellHeight}}px\' }">\n    <span class="ng-grid__cell__content-wrap">\n        {{ ::renderCellContent(row._rowIndex, $parent.$index) }}\n    </span>\n</div>\n<div\n    ng-if="!gridIsReadOnly && !isCustomTpl"\n    class="grid__cell__content {{ getCellClass($parent.$parent.$index, $parent.$index) }}"\n    ng-class="{ \'grid__cell--nonselectable\': !isColumnSelectable($index), \'grid__cell--noneditable\': !isColumnEditable($index) }"\n    ng-style="{ height: \'{{ gridOptions.headerCellHeight}}px\' }">\n    <span class="ng-grid__cell__content-wrap">\n        {{ renderCellContent(row._rowIndex, $parent.$index) }}\n    </span>\n</div>'
         };
     }]);
 

@@ -109,8 +109,6 @@
                     }
                 });
 
-                scope.isReadingInput = false;
-                scope.isInEditMode = false;
                 scope.editModeInputBuffer = null;
 
                 scope.setEditModeInputBuffer = function (value) {
@@ -122,12 +120,14 @@
                         return false;
                     }
 
-                    scope.isInEditMode = mode;
+                    scope.setGridActiveMode(mode);
+
                     if (mode) {
                         keyBindingsListener.stop_listening();
                     } else {
                         keyBindingsListener.listen();
                     }
+
                     if (!scope.$$phase) {
                         scope.$apply();
                     }
@@ -185,7 +185,7 @@
                 };
 
                 scope.$on('is-reading-input-change', function (e, value) {
-                    scope.isReadingInput = value;
+                    scope.setGridIsReadingInput(value);
 
                     if (!scope.$$phase) {
                         scope.$digest();

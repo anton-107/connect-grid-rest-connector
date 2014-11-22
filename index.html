@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="bower_components/connect-grid/styles/grid.css"/>
 
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/connect-grid/build/build.js"></script>
 
@@ -27,7 +28,7 @@
 </div>
 
 <script>
-    var app = angular.module('gridDemo', ['connect-grid'])
+    var app = angular.module('gridDemo', ['connect-grid', 'ngResource'])
             .controller('gridDemoController', ['$scope', function ($scope) {
 
                             $scope.data = [];
@@ -38,7 +39,11 @@
                                     {field: 'year'},
                                     {field: 'revenue'}
                                 ]
-                            }
+                            };
+
+                            $scope.gridRestConnectorOptions = {
+                                resource: 'word'
+                            };
                         }]);
     angular.bootstrap(document, ['gridDemo']);
 </script>
