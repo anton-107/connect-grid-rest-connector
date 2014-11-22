@@ -10,6 +10,7 @@
 
     <!-- build:js:bundle build.js -->
     <script src="module.js"></script>
+    <script src="js/grid-rest-connector-directive.js"></script>
     <!-- /build -->
     <style>
         .country-cell {
@@ -19,7 +20,7 @@
 </head>
 <body ng-controller="gridDemoController">
 
-<connect-grid class="grid" ng-model="data" grid-options="gridOptions"></connect-grid>
+<connect-grid class="grid" ng-model="data" grid-options="gridOptions" connect-grid-rest-connector="gridRestConnectorOptions"></connect-grid>
 
 <div style="clear: both"></div>
 
@@ -28,23 +29,31 @@
 </div>
 
 <script>
-    var app = angular.module('gridDemo', ['connect-grid', 'ngResource'])
-            .controller('gridDemoController', ['$scope', function ($scope) {
+    var app = angular.module('gridDemo', ['connect-grid', 'connect-grid-rest-connector', 'ngResource'])
+            .controller('gridDemoController', [
+                            '$scope',
+                            '$resource',
+                            function ($scope, $resource) {
 
-                            $scope.data = [];
+                                var WordResource = $resource('/api/word/:wordId', {
+                                    'wordId': '@id'
+                                });
 
-                            $scope.gridOptions = {
-                                columnDefs: [
-                                    {field: 'name'},
-                                    {field: 'year'},
-                                    {field: 'revenue'}
-                                ]
-                            };
+                                $scope.data = [];
 
-                            $scope.gridRestConnectorOptions = {
-                                resource: 'word'
-                            };
-                        }]);
+                                $scope.gridOptions = {
+                                    columnDefs: [
+                                        {field: 'english', width: 100},
+                                        {field: 'dutch', width: 100},
+                                        {field: 'partOfSpeech', width: 100},
+                                        {field: 'usageExample', width: 250}
+                                    ]
+                                };
+
+                                $scope.gridRestConnectorOptions = {
+                                    Resource: WordResource
+                                };
+                            }]);
     angular.bootstrap(document, ['gridDemo']);
 </script>
 
