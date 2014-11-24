@@ -17,9 +17,7 @@
                             return;
                         }
 
-                        Resource.query();
 
-                        console.log('options', options);
                     },
                     post: function () {
                         console.log('post');

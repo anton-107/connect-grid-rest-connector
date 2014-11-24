@@ -5,6 +5,7 @@
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/connect-grid/build/build.js"></script>
 
@@ -29,17 +30,24 @@
 </div>
 
 <script>
-    var app = angular.module('gridDemo', ['connect-grid', 'connect-grid-rest-connector', 'ngResource'])
+    var app = angular.module('gridDemo', ['connect-grid', 'connect-grid-rest-connector', 'ngResource', 'ngMockE2E'])
             .controller('gridDemoController', [
                             '$scope',
                             '$resource',
-                            function ($scope, $resource) {
+                            '$httpBackend',
+                            function ($scope, $resource, $httpBackend) {
+
+                                $httpBackend.whenGET('/api/word').respond([
+                                    { dutch: 'veel', english: 'much', partOfSpeech: 'num', usageExample: 'We keken beiden uit over de rivier en zeiden niet veel' },
+                                    { dutch: 'goed', english: 'good', partOfSpeech: 'adj', usageExample: 'Wij sporen onze leden aan om goede burgers te zijn' },
+                                    { dutch: 'vrolijk', english: 'cheerful, merry', partOfSpeech: 'adj', usageExample: 'Ze zongen samen een vrolijk liedje' }
+                                ]);
 
                                 var WordResource = $resource('/api/word/:wordId', {
                                     'wordId': '@id'
                                 });
 
-                                $scope.data = [];
+                                $scope.data = WordResource.query();;
 
                                 $scope.gridOptions = {
                                     columnDefs: [
